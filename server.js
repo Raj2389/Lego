@@ -101,6 +101,11 @@ app.post('/lego/add', (req, res) => {
         });
 });
 
+// Middleware to handle 404 errors
+app.use((req, res, next) => {
+  res.status(404).sendFile(path.join(__dirname, 'views', '404.html')); // Serve 404.html
+});
+
 legoData.initialize().then(() => {
     app.listen(HTTP_PORT, () => {
         console.log(`server listening on: ${HTTP_PORT}`);

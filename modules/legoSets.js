@@ -101,5 +101,6 @@ addSet(newSet) {
     }
   });
 }
+
 }
 module.exports = LegoData;
