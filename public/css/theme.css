@@ -262,5 +262,7 @@ input {
 }
 
 .caption-center {
-    text-align: center;
+    text-align: center; /* Centers the text */
+    width: 100%; /* Full width to ensure centering */
+    margin: 0 auto; /* Center the element itself */
 }
