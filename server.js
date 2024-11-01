@@ -94,7 +94,7 @@ app.post('/lego/add', (req, res) => {
 
     legoData.addSet(newSet)
         .then(() => {
-            res.status(201).send("Set added successfully"); // Respond with success message
+            res.status(200).send("Set added successfully"); // Respond with success message
         })
         .catch((error) => {
             res.status(422).send({ error: error }); // Send error with status 422
