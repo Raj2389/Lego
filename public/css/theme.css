@@ -1,0 +1,263 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Rubik+Wet+Paint&display=swap');
+
+/* Global Styles */
+body, html {
+    /* Set a gradient background and a Halloween-themed image */
+    background: linear-gradient(to bottom, #2c2c2c, #c8b3b3), url('https://assets.editorial.aetnd.com/uploads/2009/11/halloween-gettyimages-1424736925.jpg'); /* Added Halloween background image */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    background-size: cover; /* Ensure the background image covers the entire area */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Ensure gradient covers entire page */
+}
+
+/* Heading Styles */
+h1 {
+    font-family: "Creepster", cursive; /* Spooky font for h1 */
+    text-shadow: 2px 2px 5px orange; /* Spooky text shadow */
+    text-align: center; /* Center the main heading */
+    margin: 20px auto; /* Center the heading with auto margins */
+    width: fit-content; /* Adjust width to fit content */
+}
+
+/* Subheading Styles */
+h2 {
+    text-align: center; /* Center all h2 headings */
+    margin: 15px auto; /* Center the h2 heading with auto margins */
+    width: fit-content; /* Adjust width to fit content */
+    color: orange; /* Orange color for h2 headings */
+}
+
+/* Body Font Size */
+body {
+    font-size: 20px; /* Base font size */
+}
+
+/* Paragraph Styles */
+p { /* All p elements */
+    color: #e0e0e0; /* Light gray text color */
+    text-align: center; /* Center text on the page */
+}
+
+/* Span Styles */
+span.span1 { /* All span elements with the class="span1" */
+    color: purple; /* Text color */
+}
+
+/* Summary ID Styles */
+#summary { /* The element with id="summary" */
+    color: blue; /* Text color */
+}
+
+/* Div Paragraph Styles */
+div p { /* Select all p elements within div elements */
+    background-color: lightblue; /* Background color */
+}
+
+/* Emphasis Styles */
+.span1 em { /* Selects all em elements inside elements with class="span1" */
+    text-decoration: underline; /* Underline text */
+}
+
+/* Article and Footer Styles */
+article, footer { /* Selects all article and all footer elements */
+    background-color: #333333; /* Dark background for articles and footers */
+    font-size: 200%; /* Font size */
+    width: 80vw; /* Width */
+    box-shadow: 20px 27px 15px 5px #f4f2f2; /* Box shadow */
+}
+
+/* Anchor Styles */
+a:link, a:visited {
+    color: #ffcc00; /* Yellow color for links */
+    text-decoration: none; /* No underline for unvisited links */
+}
+
+a:active {
+    font-weight: bold; /* Bold text for active links */
+    color: #ffffff; /* Change text color to white for active links */
+}
+
+a:hover {
+    color: #ff6600; /* Bright orange on hover */
+    text-decoration: underline; /* Underline text on hover */
+}
+
+/* Table Styles */
+.custom-table {
+    background-color: #f9f9f9; /* Light background for tables */
+    border: 1px solid #ddd; /* Border for tables */
+    margin-bottom: 20px; /* Space below tables */
+}
+
+.custom-table th {
+    background-color: #007bff; /* Header background color */
+    color: white; /* Header text color */
+}
+
+.custom-table td {
+    padding: 10px; /* Padding for table cells */
+}
+
+/* List Styles */
+.custom-list {
+    margin: 20px 0; /* Margin for lists */
+    padding-left: 20px; /* Indentation for lists */
+}
+
+.custom-list li {
+    margin-bottom: 10px; /* Space between list items */
+    color: #ffcc00; /* Yellow color for list items */
+}
+
+/* Image Styles */
+.custom-images {
+    display: flex; /* Flexbox for image layout */
+    justify-content: space-around; /* Space around images */
+    margin: 20px 0; /* Margin for images */
+}
+
+.custom-images img {
+    border: 2px solid #007bff; /* Border for images */
+    border-radius: 5px; /* Rounded corners for images */
+    filter: drop-shadow(0 0 10px orange); /* Glow effect for images */
+}
+
+/* Audio Styles */
+.custom-audio {
+    margin: 20px 0; /* Margin for audio section */
+    padding: 10px; /* Padding for audio section */
+    background-color: #e9ecef; /* Light background for audio */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Video Styles */
+.custom-video {
+    margin: 20px 0; /* Margin for video section */
+    padding: 10px; /* Padding for video section */
+    background-color: #e9ecef; /* Light background for video */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Navigation Bar & Hero */
+.navbar-light {
+    background: linear-gradient(to right, #000000, #4b4b4b); /* Dark gradient for navbar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow */
+}
+
+/* Navigation Brand */
+.navbar-brand {
+    font-family: 'Lobster', cursive; /* Custom font */
+    color: #ffcc00; /* Yellow text color for brand */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow */
+}
+
+/* Navigation Links */
+.nav-link {
+    font-family: 'Rubik Wet Paint', sans-serif; /* Custom font */
+    color: #ffffff; /* White text color for links */
+}
+
+.nav-link:hover {
+    color: #ff6600; /* Bright orange on hover */
+}
+
+/* Table Styles */
+table tr:nth-child(odd) td {
+    background-color: #f2f2f2; /* Solid background color for odd rows */
+}
+
+/* Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rubik Wet Paint', sans-serif; /* Custom font */
+    color: orange; /* New text color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow */
+}
+
+/* Anchor Styles */
+a {
+    color: #007bff; /* New text color */
+}
+
+a:hover {
+    color: #0056b3; /* Hover color */
+}
+
+/* List Styles */
+ol, ul {
+    margin: 20px; /* Margin for lists */
+    padding-left: 20px; /* Indentation for lists */
+    color: white; /* Change text color for lists to white */
+}
+
+li {
+    margin-bottom: 10px; /* Space between list items */
+    color: white; /* Change text color for list items to white */
+}
+
+.image-container {
+    display: flex; /* Use Flexbox to arrange images side by side */
+    justify-content: center; /* Center images horizontally */
+    align-items: center; /* Center images vertically */
+    margin: 0 auto; /* Center the container itself on the page */
+    max-width: 1000px; /* Optional: limit the maximum width of the container */
+    flex-wrap: wrap; /* Allow images to wrap if the screen is too small */
+}
+
+.img-fluid {
+    width: 30%; /* Set a percentage width for all images */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 300px; /* Optional: limit the maximum width */
+    margin: 10px; /* Add some margin around images */
+}
+
+.centered-images {
+    display: flex; /* Use Flexbox to arrange images side by side */
+    justify-content: center; /* Center images horizontally */
+    align-items: center; /* Center images vertically */
+    margin: 0 auto; /* Center the container itself on the page */
+    max-width: 1000px; /* Optional: limit the maximum width of the container */
+    flex-wrap: wrap; /* Allow images to wrap if the screen is too small */
+}
+
+.img-fluid {
+    width: 30%; /* Set a percentage width for all images */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 300px; /* Optional: limit the maximum width */
+    margin: 10px; /* Add some margin around images */
+}
+
+.centered-audio {
+    display: flex; /* Use Flexbox to center the audio player */
+    justify-content: center; /* Center the audio player horizontally */
+    align-items: center; /* Center the audio player vertically */
+    margin: 20px auto; /* Center the container itself on the page with some margin */
+}
+
+.centered-video {
+    display: flex; /* Use Flexbox to center the video player */
+    justify-content: center; /* Center the video player horizontally */
+    align-items: center; /* Center the video player vertically */
+    margin: 20px auto; /* Center the container itself on the page with some margin */
+}
+
+/* Add styles for form alignment */
+form {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    max-width: 400px; /* Set a maximum width for the form */
+    margin: auto; /* Center the form on the page */
+}
+
+label {
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+input {
+    margin-bottom: 15px; /* Space between input fields */
+    padding: 10px; /* Add padding for better appearance */
+    border: 1px solid #ccc; /* Add border to input fields */
+    border-radius: 4px; /* Rounded corners */
+}
+

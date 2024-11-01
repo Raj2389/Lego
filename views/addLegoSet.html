@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Lego Set</title>
+    <link rel="stylesheet" href="/css/theme.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <h1>Add a New Lego Set</h1>
+    <form id="addLegoSetForm" action="/lego/add" method="POST">
+        <label for="set_num">Set Number:</label>
+        <input type="text" id="set_num" name="set_num" value="03093-1" required>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="The Race to Build It Board Game" required>
+        
+        <label for="year">Year:</label>
+        <input type="text" id="year" name="year" value="1999" required>
+        
+        <label for="theme_id">Theme ID:</label>
+        <input type="text" id="theme_id" name="theme_id" value="674" required>
+        
+        <label for="num_parts">Number of Parts:</label>
+        <input type="number" id="num_parts" name="num_parts" value="77" required>
+        
+        <label for="img_url">Image URL:</label>
+        <input type="url" id="img_url" name="img_url" value="https://cdn.rebrickable.com/media/sets/03093-1.jpg" required>
+        
+        <button type="submit">Add Lego Set</button>
+    </form>
+</body>
+</html>
