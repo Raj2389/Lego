@@ -6,7 +6,7 @@ const path = require("path");
 const HTTP_PORT = process.env.PORT || 8080;
 app.use(express.static(__dirname + '/public'));
 // Serve static files from the "public" directory
-app.use(express.static('public'));
+//app.use(express.static('public'));
 app.use(express.json()); // Middleware to parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 
