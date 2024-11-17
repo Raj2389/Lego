@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Specify the language for accessibility -->
+<head>
+    <title>Lego Collection</title> <!-- Set the title of the page -->
+    <meta charset="UTF-8" /> <!-- Set character encoding for the document -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/theme.css"> <!-- Link to custom theme CSS -->
+</head>
+
+<body>
+    <%- include('partials/navbar', {page: '/lego/sets'}) %> <!-- Include the navigation bar -->
+
+    <div class="container"> <!-- Create a container for the main content -->
+        <div class="row"> <!-- Create a row for layout -->
+            <main class="col-md-12"> <!-- Main content area spanning 12 columns -->
+
+                <section class="bg-light text-center py-5"> <!-- Section for the collection header -->
+                    <div class="container"> <!-- Inner container for spacing -->
+                        <h1 class="display-5 fw-bold">Collection</h1> <!-- Main heading for the collection -->
+                        <p class="lead text-muted">Browse the entire collection. Click the theme to filter by themes such as:</p> <!-- Description of the collection -->
+                        <!-- Action buttons for filtering by theme -->
+                        <a href="/lego/sets?theme=Technic" class="btn btn-link">Technic</a>
+                        <a href="/lego/sets?theme=Classic Town" class="btn btn-link">Classic Town</a>
+                        <a href="/lego/sets?theme=Supplemental" class="btn btn-link">Supplemental</a>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <br/>
+
+    <section> <!-- Section for displaying the Lego sets in a table -->
+        <table class="table table-bordered"> <!-- Create a bordered table -->
+            <thead> <!-- Table header -->
+                <tr>
+                    <th>Image</th> <!-- Column for set images -->
+                    <th>Name</th> <!-- Column for set names -->
+                    <th>Theme</th> <!-- Column for set themes -->
+                    <th>Year</th> <!-- Column for release year -->
+                    <th>Number of Parts</th> <!-- Column for number of parts -->
+                    <th>Details</th> <!-- Column for details link -->
+                </tr>
+            </thead>
+            <tbody> <!-- Table body for dynamic content -->
+                <% sets.forEach(set => { %> <!-- Iterate over each Lego set -->
+                    <tr> <!-- Create a new row for each set -->
+                        <td>
+                            <!-- Create a div for the set image with background styling -->
+                            <div class="rounded" style="width: 8rem; height: 8rem; background-image: url('<%= set.img_url %>'); background-size: cover; background-position: center;"></div>
+                        </td>
+                        <td><%= set.name %></td> <!-- Display the set name -->
+                        <td>
+                            <!-- Link to filter sets by theme -->
+                            <a href="/lego/sets?theme=<%= set.theme %>" class="btn btn-link"><%= set.theme %></a>
+                        </td>
+                        <td><%= set.year %></td> <!-- Display the release year -->
+                        <td><%= set.num_parts %></td> <!-- Display the number of parts -->
+                        <td>
+                            <!-- Link to view details of the specific set -->
+                            <a href="/lego/sets/<%= set.set_num %>" class="btn btn-primary">Details</a>
+                        </td>
+                    </tr>
+                <% }); %> <!-- End of iteration over sets -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Include Bootstrap JS bundle for functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>

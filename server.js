@@ -1,113 +1,110 @@
+const express = require("express");
+const path = require("path");
 const LegoData = require("./modules/legoSets");
 const legoData = new LegoData();
-const express = require("express");
 const app = express();
-const path = require("path");
 const HTTP_PORT = process.env.PORT || 8080;
-app.use(express.static(__dirname + '/public'));
-// Serve static files from the "public" directory
-//app.use(express.static('public'));
-app.use(express.json()); // Middleware to parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 
-app.get("/", (req, res) => {
-    // res.send("Hello World!!!!!");
-    res.sendFile(path.join(__dirname, "views/home.html"));
-});
+// Constants for HTTP status codes
+const HTTP_STATUS = {
+    OK: 200,
+    CREATED: 201,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500,
+};
 
-app.get("/about", (req, res) => {
-    // res.send("About!")
-    res.sendFile(path.join(__dirname, "views/about.html"));
-});
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Middleware
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.get("/", (req, res) => res.render("home"));
+app.get("/about", (req, res) => res.render("about"));
 
 // Route to get all Lego sets or filter by theme
 app.get('/lego/sets', async (req, res) => {
-    const theme = req.query.theme;
-    console.log("Requested theme:", theme); // Log the requested theme
+    const { theme } = req.query; // Destructure theme from query
+    console.log("Requested theme:", theme);
     try {
-        if (theme) {
-            const setByTheme = await legoData.getSetsByTheme(theme); // Await the result of the method
-            console.log("Filtered sets:", setByTheme); // Log the filtered sets
-            res.json(setByTheme); // Return the filtered sets as JSON
-        } else {
-            res.json(legoData); // Return all Lego sets if no theme is provided
-        }
+        const sets = theme 
+            ? await legoData.getSetsByTheme(theme) 
+            : await legoData.getAllSets();
+
+        res.render("sets", { sets: Array.isArray(sets) ? sets : [] });
     } catch (error) {
-        console.error("Error occurred:", error); // Log the error
-        // Serve the 404.html file on error
-        const filePath = path.join(__dirname, 'views', '404.html'); // Define the file path
-        res.status(404).sendFile(filePath); // Send the 404.html file with status 404
+        console.error("Error occurred:", error);
+        res.status(HTTP_STATUS.NOT_FOUND).render("404");
     }
 });
 
 // Route to get a single Lego set by set_num
 app.get('/lego/sets/:set_num', async (req, res) => {
-    const setNum = req.params.set_num;
-    console.log("Requested set number:", setNum); // Log the requested set number
+    const { set_num } = req.params; // Destructure set_num from params
+    console.log("Requested set number:", set_num);
     try {
-        const setByNum = await legoData.getSetByNum(setNum); // Await the result of the method
-        // Check if the set is found
+        const setByNum = await legoData.getSetByNum(set_num);
         if (setByNum) {
-            console.log("Found set:", setByNum); // Log the found set
-            res.json(setByNum); // Return the found set
+            res.render("set", { set: setByNum });
         } else {
-            // If no set is found, serve the 404.html file
-            const filePath = path.join(__dirname, 'views', '404.html'); // Define the file path
-            res.status(404).sendFile(filePath); // Send the 404.html file with status 404
+            res.status(HTTP_STATUS.NOT_FOUND).render("404");
         }
     } catch (error) {
-        console.error("Error occurred:", error); // Log the error
-        // Serve the 404.html file on error
-        const filePath = path.join(__dirname, 'views', '404.html'); // Define the file path
-        res.status(404).sendFile(filePath); // Send the 404.html file with status 404
+        console.error("Error occurred:", error);
+        res.status(HTTP_STATUS.NOT_FOUND).render("404");
     }
 });
 
-// Route to add a test Lego set
-app.get('/lego/add-test', (req, res) => {
-  let testSet = {
-    set_num: "123",
-    name: "testSet name",
-    year: "2024",
-    theme_id: "366",
-    num_parts: "123",
-    img_url: "https://fakeimg.pl/375x375?text=[+Lego+]"
-  };
-
-  legoData.addSet(testSet)
-    .then(() => {
-      res.redirect('/lego/sets'); // Redirect on success
-    })
-    .catch((error) => {
-      res.status(422).send(error); // Send error with status 422
-    });
-});
-
 // Route to serve the add Lego set form
-app.get('/lego/add', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'addLegoSet.html')); // Serve the addLegoSet.html file
+app.get('/lego/addSet', async (req, res) => {
+    try {
+        const themes = await legoData.getAllThemes();
+        res.render("addSet", { themes });
+    } catch (error) {
+        console.error("Error fetching themes:", error);
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send("Internal Server Error");
+    }
 });
 
 // Route to add a new Lego set
-app.post('/lego/add', (req, res) => {
-    const newSet = req.body; // Expecting the new set data in the request body
+app.post('/lego/addSet', async (req, res) => {
+    try {
+        const foundTheme = await legoData.getThemeById(req.body.theme_id);
+        req.body.theme = foundTheme.name;
+        await legoData.addSet(req.body);
+        res.redirect('/lego/sets');
+    } catch (error) {
+        console.error("Error adding set:", error);
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send("Internal Server Error");
+    }
+});
 
-    legoData.addSet(newSet)
-        .then(() => {
-            res.status(200).send("Set added successfully"); // Respond with success message
-        })
-        .catch((error) => {
-            res.status(422).send({ error: error }); // Send error with status 422
-        });
+// Route to delete a Lego set
+app.get("/lego/deleteSet/:set_num", async (req, res) => {
+    const { set_num } = req.params; // Destructure set_num from params
+    try {
+        await legoData.deleteSetByNum(set_num);
+        res.redirect("/lego/sets");
+    } catch (err) {
+        console.error("Error deleting set:", err);
+        res.status(HTTP_STATUS.NOT_FOUND).send("Set not found");
+    }
 });
 
 // Middleware to handle 404 errors
-app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, 'views', '404.html')); // Serve 404.html
+app.use((req, res) => {
+    res.status(HTTP_STATUS.NOT_FOUND).render("404");
 });
 
+// Initialize and start the server
 legoData.initialize().then(() => {
     app.listen(HTTP_PORT, () => {
-        console.log(`server listening on: ${HTTP_PORT}`);
+        console.log(`Server listening on: ${HTTP_PORT}`);
     });
+}).catch(error => {
+    console.error("Error initializing LegoData:", error);
 });

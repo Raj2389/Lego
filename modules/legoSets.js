@@ -1,106 +1,106 @@
 /********************************************************************************
-* WEB700 – Assignment 4
+* WEB700 – Assignment 5
 *
 * I declare that this assignment is my own work in accordance with Seneca's
 * Academic Integrity Policy:
 *
 * https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
 *
-* Name: Rajan Kamboj Student ID: 113449243 Date: 01-11-2024 (dd-mm-yyyy)
+* Name: Rajan Kamboj Student ID: 113449243 Date: 17-11-2024 (dd-mm-yyyy)
 *
 ********************************************************************************/
 
-class LegoData{
- sets;
- constructor(){
-  this.sets = [];
- }
- // function initialize to create the arrays using 'require' and use .forEach and .find() to compare both the arrays to add theme name to the final format of sets
- initialize(){
-  return new Promise((resolve, reject) => { // new Promise initiated
-    try {
-      const setData = require("../data/setData");
-      const themeData = require("../data/themeData");
-      setData.forEach((eachSet) =>{
-        const theme = themeData.find((theme) => theme.id === eachSet.theme_id); // using .find() to find the set where theme.id of themeData is equal to set.theme_id of setData array
+class LegoData {
+    sets; // Array to hold Lego sets
+    themes; // Array to hold themes
 
-        // creating a new set object with theme name(setData+theme)
-        this.sets.push({
-          ...eachSet, // this will bring all the existing fields in the set that already exists
-          theme: theme.name // creating a field name theme in the set object and assigning the value of theme
-        })
-      });
-      resolve(); // if all setData is pushed to Sets successfully with theme add, resolve
-      //console.log(this.sets);
-    }catch(err){
-        reject({ code: 500, message: "Error in initialization " + err });  // if any error comes, reject with code
+    constructor() {
+        this.sets = []; // Initialize sets array
+        this.themes = []; // Initialize themes array
     }
-  });
-  
- }
- //function getAllSets() to  return all the sets
-getAllSets(){
-  return new Promise((resolve, reject) => { // new Promise initiated
-    try {
-       resolve(this.sets); // if all sets are returned, resolve
-    }catch(err){
-      reject({ code: 500, message: "Error in returing all Sets: " + err }); // reject if any error is encountered
-    }
-});
-   
-}
-// function getSetByNum to return the sets where sets.set_num match with the setNum provided by us
-getSetByNum(setNum){
-  return new Promise((resolve,reject) => {  // new Promise initiated
-    try{
-      const setByNum = this.sets.find((eachSet) => eachSet.set_num === setNum);
-      if(setByNum){
-        resolve(setByNum); // if setByNum is found, return resolve
-      }
-      else{
-        // Custom 404 error response
-        reject({ code: 404, message: "Set not found", file: "/views/404.html" }); // if no set is found, return reject with 404
-      }
-    }catch(err){
-      reject({ code: 500, message: "Error caught in getSetByNum for the entered setNum: " + setNum + " ; " + err });  // if error caught, return reject
-    }
-  });
 
-}
-// function getSetByTheme to return the sets where sets.theme match with the theme provided by us
-getSetsByTheme(theme){
-  return new Promise((resolve,reject) => {  // new Promise initiated
-    try{
-      const setByTheme = this.sets.filter(eachSet => eachSet.theme.toLowerCase().includes(theme.toLowerCase()));
-      if(setByTheme.length > 0){
-        resolve(setByTheme);  // returning resolve if sets with theme is found
-      }else{
-        // Custom 404 error response
-        reject({ code: 404, message: "No sets found with the entered theme", file: "/views/404.html" }); // returning reject with 404 if no set is found
-      }
-    }catch(error){
-      reject({ code: 500, message: "Error in getSetsByTheme for " + theme + " ; " + error }); // returning reject if any error is encountered
+    // Initialize the Lego data by loading sets and themes
+    async initialize() {
+        try {
+            const setData = require("../data/setData"); // Load set data
+            const themeData = require("../data/themeData"); // Load theme data
+            this.themes = [...themeData]; // Spread operator to copy themes
+
+            // Map through each set and associate it with its theme
+            this.sets = setData.map(eachSet => {
+                const theme = themeData.find(theme => theme.id === eachSet.theme_id); // Find the corresponding theme
+                if (!theme) {
+                    throw { code: 404, message: `Theme not found for set: ${eachSet.name}` }; // Throw error if theme is not found
+                }
+                return {
+                    ...eachSet, // Spread existing set properties
+                    theme: theme.name // Assign theme name
+                };
+            });
+        } catch (err) {
+            throw { code: 500, message: "Error in initialization: " + err }; // Throw error if initialization fails
+        }
     }
-  });
+
+    // Get all Lego sets
+    async getAllSets() {
+        return this.sets; // Return the sets array
+    }
+
+    // Get a Lego set by its number
+    async getSetByNum(setNum) {
+        const setByNum = this.sets.find(eachSet => eachSet.set_num === setNum); // Find the set by number
+        if (setByNum) {
+            return setByNum; // Return the found set
+        } else {
+            throw { code: 404, message: "Set not found" }; // Throw error if set not found
+        }
+    }
+
+    // Get Lego sets by theme
+    async getSetsByTheme(theme) {
+        const setByTheme = this.sets.filter(eachSet => eachSet.theme.toLowerCase().includes(theme.toLowerCase())); // Filter sets by theme
+        if (setByTheme.length > 0) {
+            return setByTheme; // Return the filtered sets
+        } else {
+            throw { code: 404, message: "No sets found with the entered theme" }; // Throw error if no sets found
+        }
+    }
+
+    // Add a new Lego set
+    async addSet(newSet) {
+        const existingSet = this.sets.find(set => set.set_num === newSet.set_num); // Check if the set already exists
+        if (existingSet) {
+            throw { code: 422, message: "Set already exists" }; // Throw error if set already exists
+        } else {
+            this.sets.push(newSet); // Add the new set to the array
+        }
+    }
+
+    // Get all themes
+    async getAllThemes() {
+        return this.themes; // Return the themes array
+    }
+
+    // Get a theme by its ID
+    async getThemeById(id) {
+        const theme = this.themes.find(eachTheme => eachTheme.id === id); // Find the theme by ID
+        if (theme) {
+            return theme; // Return the found theme
+        } else {
+            throw { code: 404, message: "Unable to find requested theme" }; // Throw error if theme not found
+        }
+    }
+
+    // Delete a Lego set by its number
+    async deleteSetByNum(setNum) {
+        const foundSetIndex = this.sets.findIndex(s => s.set_num == setNum); // Find the index of the set
+        if (foundSetIndex !== -1) {
+            this.sets.splice(foundSetIndex, 1); // Remove the set from the collection
+        } else {
+            throw { code: 404, message: "Set not found" }; // Throw error if set not found
+        }
+    }
 }
 
-// Method to add a new Lego set
-addSet(newSet) {
-  return new Promise((resolve, reject) => {
-    try {
-      // Check if the set_num already exists
-      const existingSet = this.sets.find(set => set.set_num === newSet.set_num);
-      if (existingSet) {
-        reject({ code: 422, message: "Set already exists" }); // Reject if the set already exists
-      } else {
-        this.sets.push(newSet); // Add the new set to the array
-        resolve(); // Resolve the promise
-      }
-    } catch (err) {
-      reject({ code: 422, message: "Error adding new set: " + err }); // Reject if any error occurs
-    }
-  });
-}
-
-}
-module.exports = LegoData;
+module.exports = LegoData; // Export the LegoData class
