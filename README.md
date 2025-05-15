@@ -84,7 +84,7 @@ npm start
 ## 👨‍💻 Author
 
 **Rajan Kamboj**
-- LinkedIn: https://lego-raj2389s-projects.vercel.app/
+- LinkedIn: www.linkedin.com/in/0112rajan
 
 ## ⚠️ Disclaimer
 
