@@ -4,7 +4,7 @@ A full-stack web application for managing and exploring Lego sets. This project 
 
 ## 🚀 Live Demo
 
-Visit the deployed application: [Your Vercel URL]
+Visit the deployed application: [https://lego-raj2389s-projects.vercel.app/](https://lego-raj2389s-projects.vercel.app/)
 
 ## ✨ Features
 
