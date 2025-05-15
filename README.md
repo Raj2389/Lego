@@ -87,14 +87,12 @@ npm start
 - GitHub: [Your GitHub Profile]
 - LinkedIn: [Your LinkedIn Profile]
 
-## 📝 License
+## ⚠️ Disclaimer
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The Lego set data is provided for demonstration purposes only. All Lego-related trademarks and copyrights belong to their respective owners.
+
+© 2024 Rajan Kamboj. All rights reserved.
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [CONTRIBUTING.md](CONTRIBUTING.md) file.
-
-## ⚠️ Disclaimer
-
-The Lego set data is provided for demonstration purposes only. All Lego-related trademarks and copyrights belong to their respective owners. 
+Contributions, issues, and feature requests are welcome! Feel free to check the [CONTRIBUTING.md](CONTRIBUTING.md) file. 

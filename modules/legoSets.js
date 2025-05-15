@@ -1,4 +1,14 @@
-
+/********************************************************************************
+* Lego Set Management System
+* © 2024 Rajan Kamboj. All rights reserved.
+*
+* A custom implementation of a Lego set management system
+* Built with Node.js and Express.js
+*
+* Author: Rajan Kamboj
+* Date: 17-11-2024
+*
+********************************************************************************/
 
 class LegoData {
     sets; // Array to hold Lego sets
