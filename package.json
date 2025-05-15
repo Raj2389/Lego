@@ -1,16 +1,16 @@
 {
-  "name": "package.json",
+  "name": "lego-set-management",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
+  "author": "Rajan Kamboj",
   "license": "ISC",
-  "description": "",
+  "description": "A full-stack web application for managing and exploring Lego sets",
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.21.1"
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
   }
 }
